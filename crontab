@@ -20,3 +20,9 @@ SHELL=/bin/bash
 
 # every Saturday at 8:05 AM
 5 8 * * 6 /home/user/command.sh
+
+# su - root 
+1 6 * * * su - root -c "/root/iptv/hntv.sh >/dev/null 2>&1 &"
+
+# edit
+crontab -e

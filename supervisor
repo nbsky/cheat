@@ -1,0 +1,60 @@
+* python开发的通用进程管理器
+
+* 注意事项
+
+* 安装
+`pip install supervisor`
+
+* 测试是否安装成功
+`echo_supervisord_conf #会打印默认配置`
+
+* 生成默认配置文件
+`echo_supervisord_conf > /etc/supervisord.conf #和nginx配置一样可以使用include独立的配置文件，比较漂亮使用这个路径的配置启动可以不用指定`
+
+* 启动服务
+`supervisord #不加参数会使用 /etc/supervisord.conf这个配置`
+也可以手动指定配置文件
+`supervisord -c /home/chenpeiqi/supervisord.conf`
+* 使用配置启动
+`supervisorctl  restart lehi:LEHI-SERVER`
+
+* 配置
+
+```
+[program:lehi]
+process_name=LEHI-SERVER                #
+directory=/home/work/lehi               #command的执行目录
+command=gunicorn lehi.wsgi --config=/home/work/lehi/etc/gunicorn.conf
+autostart=true                          #supervisor启动的时候是否随着同时启动
+autorestart=true
+stdout_logfile=/home/work/lehi/logs/supervisor-lehi-stdout.log
+stderr_logfile=/home/work/lehi/logs/supervisor-lehi-stderr.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=10
+stderr_logfile_maxbytes=50MB
+stderr_logfile_backups=10
+
+[program:refresh]
+process_name=REFRESH-DATABASE
+directory=/home/work/lehi/bin/
+command=python launch.py
+autostart=true
+autorestart=true
+stdout_logfile=/home/work/lehi/logs/supervisor-refresh-stdout.log
+stderr_logfile=/home/work/lehi/logs/supervisor-refresh-stderr.log
+stdout_logfile_maxbytes=50MB
+stdout_logfile_backups=10
+stderr_logfile_maxbytes=50MB
+stderr_logfile_backups=10
+```
+
+
+* 进入控制台命令
+
+
+
+
+ 当用supervisor监护进程时，被监护进程不能是守护进程
+这是由于守护进程通常会在fork完子进程后就让父进程”结束生命”，也即由supervisor创建的父进程退出，此时，supervisor无法再监护已退出进程创建出来的子进程。
+1. php-fpm.conf，设置daemonize = no，默认是yes 2 在supervisor的配置文件中，设置’command’对php-fpm主进程的调起参数时，不传入–daemonize参数
+

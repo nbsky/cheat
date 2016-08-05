@@ -1,3 +1,6 @@
+#List all folder sizes for the current directory
+du --max-depth 1 -h
+
 # To sort directories/files by size
 du -sk *| sort -rn
 

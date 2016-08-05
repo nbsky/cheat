@@ -1,3 +1,5 @@
+# branch bulk deletion like feature/*
+git branch | grep feature | xargs git branch -D
 # To set your identity:
 git config --global user.name "John Doe"
 git config --global user.email johndoe@example.com
@@ -58,7 +60,7 @@ git branch -u upstream/foo
 git blame filename
 
 # To sync a fork with the master repo:
-git remote add upstream git@github.com:name/repo.git    # Set a new repo
+git remote add origin git@github.com:name/repo.git    # Set a new repo
 git remote -v                                           # Confirm new remote repo
 git fetch upstream                                      # Get branches
 git branch -va                                          # List local - remote branches

@@ -1,0 +1,68 @@
+###如果自己编译安装php-fpm等服务程序,/etc/init.d目录中的这个脚本是需要自己加的.幸运的是很多服务程序的源码包中都附带了这个脚本加完这个脚本就可以使用 service 命令地洞
+
+```
+mysql5.6源码中的 support-files/mysql.server 
+php5.4源码中的 sapi/fpm/init.d.php-fpm 
+redis2.6源码中的 utils/redis_init_script
+```
+
+####已经配置service,可以使用chkconfig配置开机启动管理这些service
+```
+[root@letvmovie-dev02 mysql_backup]# chkconfig --add php-fpm #添加/etc/init.d下面的service到chkconfig 就可以使用service 命令启动
+[root@letvmovie-dev02 mysql_backup]# chkconfig --list php-fpm
+php-fpm         0:off   1:off   2:on    3:off   4:on    5:on    6:off
+[root@letvmovie-dev02 mysql_backup]# chkconfig php-fpm on   #设置启动不加--level 会自动添加 2345
+[root@letvmovie-dev02 mysql_backup]# chkconfig --list php-fpm
+php-fpm         0:off   1:off   2:on    3:on    4:on    5:on    6:off
+
+0-7表示linux的runlevel
+
+```
+
+
+####runlevel介绍，3和5最常用，一个标准命令行一个标准图形
+* linux下面的runlevel
+```
+[root@letvmovie-dev02 mysql_backup]# tail /etc/inittab
+# Default runlevel. The runlevels used are:
+#   0 - halt (Do NOT set initdefault to this)    0 #停机(千万不能把initdefault 设置为0 )
+#   1 - Single user mode                           #单用户模式 
+#   2 - Multiuser, without NFS (The same as 3, if you do not have networking) #多用户，没有 NFS
+#   3 - Full multiuser mode                        #完全多用户模式(标准的运行级) 一般命令行都是这个runleve 可以运行runlevel命令查看当前runlevel
+#   4 - unused                                     #用户自定义
+#   5 - X11                                        #比3多了图形界面
+#   3 - reboot (Do NOT set initdefault to this)    #重新启动
+# 
+id:3:initdefault:
+```
+
+* /etc/rc[0~6].d其实是/etc/rc.d/rc[0~6].d的软连接，主要是为了保持和Unix的兼容性才做此策,如果我们不适用chkconfig也可以在对应的rc*.d建立/etc/init.d的软连接。
+```
+[root@letvmovie-dev02 rc.d]# pwd
+/etc/rc.d
+[root@letvmovie-dev02 rc.d]# ll
+total 884
+drwxr-xr-x. 10 root root   4096 Apr  8 17:36 .
+drwxr-xr-x. 95 root root 835584 Jul 14 17:15 ..
+drwxr-xr-x.  2 root root   4096 Jul  7 16:18 init.d
+-rwxr-xr-x.  1 root root   2617 Sep  3  2014 rc
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc0.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc1.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc2.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc3.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc4.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc5.d
+drwxr-xr-x.  2 root root   4096 Jul 14 11:19 rc6.d
+-rwxr-xr-x   1 root root    353 Jul  7 10:55 rc.local
+-rwxr-xr-x.  1 root root  19688 Jan  6  2015 rc.sysinit
+```
+
+
+* 手动建立/etc/init.d/sshd的启动软连接（一般还是用chkconfig 比较舒服）
+```
+
+[root@localhost ~]# 
+ln
+ -s /etc/init.d/sshd /etc/rc.d/rc3.d/S100ssh  #
+sshd是具体服务的脚本文件，S100ssh是其软链接，S开头代表加载时自启动,
+```

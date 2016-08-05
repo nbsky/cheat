@@ -1,0 +1,2 @@
+# 并发100 持续60s 50线程
+ wrk -c100 -d60s -t50 http://host.com

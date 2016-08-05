@@ -1,0 +1,2 @@
+#count file lines
+wc -l filename.txt
