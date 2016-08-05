@@ -1,0 +1,4 @@
+#Automatic interactive input yes or no
+yes | rm file # yes yes | rm file
+yes n | rm file
+

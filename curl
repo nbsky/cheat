@@ -1,5 +1,11 @@
-# add agent
+# with agent
 curl http://baidu.com -A "Chrome"
+curl https://www.baidu.com -H "User-Agent:Chrome"
+
+# with cookie
+curl -H "Cookie: sessionid=1;sso_tk=1" http://10.154.29.195:30002/users/user/ 
+curl -b "sessionid=1;sso_tk=1" http://10.154.29.195:30002/users/user/
+
 
 # Download a single file
 curl http://path.to.the/file

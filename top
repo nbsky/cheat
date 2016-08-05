@@ -1,0 +1,31 @@
+#load average: 0.07, 0.08, 0.06# 1分钟，5分钟，15分钟负载平均值，低于1，表示计算机不忙碌 
+#%Cpu(s): 2.3 us, 2.0 sy, 0.0 ni, 94.3 id, 1.3 wa, 0.0 hi, 0.0 si, 0.0 st 
+#us:备用在用户的cpu，sy：用在内核的cpu，ni：用于nice（低优先级）的cpu，id：空闲的cpu，wa用于等待io的cpu 
+#Swap，交换分区即虚拟内存
+
+# Update every <interval> samples:
+top -i <interval>
+
+# Set the delay between updates to <delay> seconds:
+top -s <delay>
+
+# Set event counting to accumulative mode:
+top -a
+
+# Set event counting to delta mode:
+top -d
+
+# Set event counting to absolute mode:
+top -e
+
+# Do not calculate statistics on shared libraries, also known as frameworks:
+top -F
+
+# Calculate statistics on shared libraries, also known as frameworks (default):
+top -f
+
+# Print command line usage information and exit:
+top -h
+
+# Order the display by sorting on <key> in descending order
+top -o <key>
