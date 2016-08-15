@@ -1,0 +1,15 @@
+# Print a list of signal names
+kill -l
+
+# reset and reload config then restart
+kill -HUP `cat file.pid`
+kill -1 `cat file.pid`
+
+# ctrl+c 
+kill -INT `cat file.pid`
+kill -2 `cat file.pid`
+
+# ctrl+d
+kill -QUIT `cat file.pid`
+kill -3 `cat file.pid`
+
