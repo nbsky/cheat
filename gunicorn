@@ -1,0 +1,3 @@
+# gunicorn
+
+gunicorn --worker-class=gevent NSLoger.wsgi:application -b 0:8000 --workers=7 --threads=10

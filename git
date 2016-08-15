@@ -1,3 +1,11 @@
+# add tag for current branch
+git tag -a v1.0.0 -m "v1.0.0"
+# tag push
+git push origin v1.0.0
+
+# merge tool
+git mergetool -t vimdiff
+
 # branch bulk deletion like feature/*
 git branch | grep feature | xargs git branch -D
 # To set your identity:
