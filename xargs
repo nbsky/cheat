@@ -1,0 +1,16 @@
+# xargs 把前面命令作为参数，不加的话是作为stdin，前者把输入作为参数后回车，后者先回车再输入
+# echo "--help"|cat
+# echo "--help"|xargs cat
+
+# find all file name ending with .pdf and remove them
+find -name *.pdf | xargs rm -rf
+
+# if file name contains spaces you should use this instead
+find -name *.pdf | xargs -I{} rm -rf '{}'
+
+# Will show every .pdf like:
+#	&toto.pdf=
+#	&titi.pdf=
+# -n1 => One file by one file. ( -n2 => 2 files by 2 files )
+
+find -name *.pdf | xargs -I{} -n1 echo '&{}='
