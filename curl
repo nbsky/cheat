@@ -1,3 +1,5 @@
+# method
+curl -X GET http://www.baidu.com
 # with agent
 curl http://baidu.com -A "Chrome"
 curl https://www.baidu.com -H "User-Agent:Chrome"
